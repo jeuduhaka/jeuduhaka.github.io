@@ -18,7 +18,7 @@ export function Card({ name, imageSrc, onClick, className }: CardProps) {
     <button
       onClick={onClick}
       className={cn(
-        'relative w-[calc(33.333%-4px)] aspect-[2/3] bg-yellow-500 border-2 border-blue-500 transition-transform active:scale-95',
+        'relative w-[calc(33.333%-4px)] aspect-[2/3] bg-transparent transition-transform active:scale-95',
         className
       )}
     >
