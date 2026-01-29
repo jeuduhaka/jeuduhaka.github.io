@@ -102,7 +102,8 @@ export default {
     "You can send to someone (or yourself) one or several gift cards (Strength, Love, Confidence, Peace, Self-esteem, Calm, Energy, Joy) which will bring a positive energy to help one develop one's Mana on life's game field.",
   sendGiftCardTextPart2:
     'Feel free to choose the most appropriate card for you or the person you want to help. The helped person is free to send it to another person of her choice.',
-  chooseGiftCard: 'Choose a gift card',
+  howToSendGiftCardTitle: 'How to send a gift card',
+  howToSendGiftCardText: 'Hold your finger on the card and press "Share image" to send the gift card to someone.',
   sendThisGiftCard: 'Send this gift card',
   giftCard: 'Gift card',
   findManaWithGiftCard: 'Find your power (Mana) thanks to this gift card!',

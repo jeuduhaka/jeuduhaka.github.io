@@ -65,10 +65,11 @@ export default function GiftCardsPage() {
         <p className="text-sm text-center mb-2">{t('sendGiftCardTextPart1')}</p>
         <p className="text-sm text-center mb-4">{t('sendGiftCardTextPart2')}</p>
 
-        <h2 className="font-bold text-center mb-3">{t('chooseGiftCard')}</h2>
+        <h2 className="font-bold text-center mb-3">{t('howToSendGiftCardTitle')}</h2>
+        <p className="text-sm text-center mb-4">{t('howToSendGiftCardText')}</p>
 
         {/* Gift Card Grid */}
-        <div className="grid grid-cols-2 gap-2 mb-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-4">
           {giftCardNames.map((cardName) => (
             <button
               key={cardName}
@@ -88,11 +89,6 @@ export default function GiftCardsPage() {
             </button>
           ))}
         </div>
-
-        {/* Send Button */}
-        {selectedCard && (
-          <Button onClick={handleShare}>{t('sendThisGiftCard')}</Button>
-        )}
       </div>
     </BackgroundWave>
   )

@@ -95,7 +95,8 @@ export default {
     '您可以给某人（或您自己）发送一张或者几张带给他（她）一种积极能量（力量、爱、信任、安宁、自尊、平静、能量、喜悦）的礼物卡，可以帮助他（她）在生命运动的大地上发展自己的超自然力。',
   sendGiftCardTextPart2:
     '自由地选择一张最合适的卡送给您自己或您想要帮助的那个人；那个人也能自由地将此卡发送给他（她）选择要帮助的人。',
-  chooseGiftCard: '选择一张礼物卡',
+  howToSendGiftCardTitle: '如何发送一张礼物卡',
+  howToSendGiftCardText: '保持手指在卡片上，然后点击“分享图片”来发送礼物卡给某人。',
   sendThisGiftCard: '发送这张礼物卡',
   giftCard: '礼物卡',
   findManaWithGiftCard: '由这张礼物卡而找到您的神力。',
