@@ -46,14 +46,14 @@ export default function ConfirmCardPage() {
   return (
     <div className="flex flex-col h-screen bg-black">
       {/* Header */}
-      <div className="relative h-12">
+      <div className="relative">
         <BackButton tintColor="#ffffff" />
         <HomeButton tintColor="#ffffff" />
       </div>
 
-      {/* Card Display */}
-      <div className="flex-1 min-h-0 flex flex-col items-center justify-center p-4 overflow-hidden">
-        <div className="relative w-full max-w-64 aspect-[2/3] max-h-[50vh]">
+      {/* Card Display - 3/5 of screen */}
+      <div className="flex-[3] min-h-0 flex flex-col items-center justify-end p-4 overflow-hidden max-[375px]:flex-[3] max-[375px]:mt-10">
+        <div className="relative w-full max-w-64 aspect-[2/3] max-h-full">
           <Image
             src={getCardImage(currentDeck, selectedCardName)}
             alt={t(selectedCardName)}
@@ -68,8 +68,8 @@ export default function ConfirmCardPage() {
         </div>
       </div>
 
-      {/* Buttons */}
-      <div className="p-4 space-y-3">
+      {/* Buttons - 2/5 of screen */}
+      <div className="flex-[2] min-h-0 flex flex-col justify-start p-4 space-y-3 max-[375px]:p-1">
         <Button onClick={handleConfirm}>{t('iChooseThisCard')}</Button>
         <Button variant="outline" onClick={handleChooseAnother}>
           {t('chooseAnotherCard')}
