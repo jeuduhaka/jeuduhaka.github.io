@@ -13,7 +13,7 @@ import { routes } from '@/lib/routes'
 export default function ChooseCardPage() {
   const router = useRouter()
   const { t } = useTranslation()
-  const { gameMode, currentDeck, selectCard } = useGameStore()
+  const { gameMode, currentDeck, selectCard, confirmCard, goToNextDeck } = useGameStore()
 
   // Get cards for current deck and sort (joker at end)
   const deckCards = Object.keys(cardImageSources.front[currentDeck]).sort((a, b) => {
@@ -28,12 +28,20 @@ export default function ChooseCardPage() {
     if (gameMode === '1move') {
       router.push(routes.game.video)
     } else {
-      router.push(routes.game.confirmCard)
+      confirmCard()
+      if (currentDeck === 'green') {
+        router.push(routes.game.afterCards)
+      } else {
+        goToNextDeck()
+        router.push(routes.game.chooseCard)
+      }
     }
   }
 
   const backHref =
-    gameMode === '3moves' && currentDeck === 'red' ? routes.game.deck : undefined
+    gameMode === '3moves' && currentDeck === 'red'
+      ? routes.game.instructions('3moves')
+      : undefined
 
   return (
     <div className="flex flex-col h-screen bg-black">

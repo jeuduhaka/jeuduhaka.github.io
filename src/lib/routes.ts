@@ -6,9 +6,7 @@ export const routes = {
   // Game flow
   game: {
     instructions: (mode: '1move' | '3moves') => `/game/instructions/${mode}`,
-    deck: '/game/deck',
     chooseCard: '/game/choose-card',
-    confirmCard: '/game/confirm-card',
     afterCards: '/game/after-cards',
     video: '/game/video',
     final: '/game/final',
