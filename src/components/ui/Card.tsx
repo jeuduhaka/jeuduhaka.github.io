@@ -18,7 +18,7 @@ export function Card({ name, imageSrc, onClick, className }: CardProps) {
     <button
       onClick={onClick}
       className={cn(
-        'relative w-full h-full bg-transparent transition-transform active:scale-95',
+        'relative w-[calc(33.333%-4px)] aspect-[2/3] bg-yellow-500 border-2 border-blue-500 transition-transform active:scale-95',
         className
       )}
     >
@@ -29,7 +29,7 @@ export function Card({ name, imageSrc, onClick, className }: CardProps) {
         className="object-contain"
         sizes="(max-width: 768px) 33vw, 200px"
       />
-      <div className="absolute bottom-2 left-0 right-0 flex justify-center">
+      <div className="absolute bottom-[5%] left-0 right-0 flex justify-center">
         <span className="text-white font-charcuterie text-lg tracking-wide drop-shadow-lg px-1 bg-black/30 rounded">
           {name}
         </span>

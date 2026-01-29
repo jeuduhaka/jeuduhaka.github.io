@@ -45,7 +45,7 @@ export default function ChooseCardPage() {
       </div>
 
       {/* Card Grid */}
-      <div className="flex-1 min-h-0 grid grid-cols-3 grid-rows-3 gap-1 p-1 overflow-hidden">
+      <div className="flex-1 min-h-0 flex flex-wrap content-start justify-center gap-x-1 gap-y-0 p-1 overflow-hidden">
         {deckCards.map((cardName) => (
           <Card
             key={cardName}
