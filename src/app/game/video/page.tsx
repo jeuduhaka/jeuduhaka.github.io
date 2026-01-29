@@ -87,9 +87,9 @@ export default function VideoPage() {
         <HomeButton tintColor="#ffffff" />
       </div>
 
-      {/* Video: hide when overlay is visible so overlay paints on top. */}
+      {/* Video: 8/10 of screen height; hide when overlay is visible so overlay paints on top. */}
       <div
-        className="flex-1 relative min-h-0"
+        className="h-[80vh] relative min-h-0 shrink-0"
         style={
           showOverlay
             ? {
