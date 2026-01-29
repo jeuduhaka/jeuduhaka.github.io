@@ -1,0 +1,17 @@
+{
+  "name": "Le Jeu du Haka",
+  "short_name": "Jeu du Haka",
+  "description": "Transforme ton énergie négative en énergie positive !",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#000000",
+  "theme_color": "#014DA2",
+  "icons": [
+    {
+      "src": "/images/jeu-du-haka-logo-200x200.png",
+      "sizes": "200x200",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}

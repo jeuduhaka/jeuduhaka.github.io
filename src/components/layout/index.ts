@@ -1,0 +1,1 @@
+export { BackgroundWave } from './BackgroundWave'
