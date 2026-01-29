@@ -7,7 +7,7 @@ import { VideoPlayer } from '@/components/game'
 import { useGameStore } from '@/store/gameStore'
 import { getYoutubeVideoUrl } from '@/data/youtubeVideos'
 import { cardImageSources } from '@/data/images'
-import { CardDeckName, DECK_ORDER } from '@/types'
+import { CardDeckName, CardName, DECK_ORDER } from '@/types'
 import { routes } from '@/lib/routes'
 
 const VALID_DECKS: CardDeckName[] = DECK_ORDER
@@ -40,7 +40,7 @@ export default function VideoPage({ params }: Props) {
   // Sync store from URL so back/refresh restores correct state
   useEffect(() => {
     if (isValid) {
-      setSelectedCardForDeck(deck, cardParam)
+      setSelectedCardForDeck(deck, cardParam as CardName)
     }
   }, [deckParam, cardParam, deck, isValid, setSelectedCardForDeck])
 
