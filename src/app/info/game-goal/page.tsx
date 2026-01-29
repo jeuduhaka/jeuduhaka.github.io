@@ -27,7 +27,6 @@ export default function GameGoalPage() {
         <div className="mb-6">
           <p className="text-center mb-4">
             {t('gameGoalParagraph1Part1')}
-            <span className="font-bold">{t('limitingEmotion')}</span>
             {t('gameGoalParagraph1Part2')}
             {t('gameGoalParagraph1Part3')}
           </p>

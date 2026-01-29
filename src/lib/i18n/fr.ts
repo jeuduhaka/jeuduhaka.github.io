@@ -79,11 +79,11 @@ export default {
   limitingEmotion: ' une émotion limitante',
   yaka: ' « Yaka »',
   better: ' mieux.',
-  gameGoalParagraph1Part1: 'Seul ou à plusieurs, vous allez exprimer',
+  gameGoalParagraph1Part1: 'Seul(e) ou à plusieurs, vous allez exprimer',
   gameGoalParagraph1Part2:
-    'par la parole et/ou les gestes vos émotions négatives',
+    ' par la parole et/ou les gestes vos émotions négatives',
   gameGoalParagraph1Part3:
-    'pour mieux les dompter, en suivant 3 étapes essentielles :',
+    ' pour mieux les dompter, en suivant 3 étapes essentielles :',
   gameGoalParagraph2Part1: 'Les gestes du haka joints à la parole',
   gameGoalParagraph2Part2:
     'vont vous permettre de (re)trouver le trésor inestimable',
