@@ -8,7 +8,7 @@ export default {
   play1Move: 'Play with 1 move',
   accessTraining: 'Access to trainings',
   allRightsReserved: 'All rights reserved',
-  powerIsInYou: '"The Power is in you!"',
+  powerIsInYou: '"The Power is within you!"',
 
   chooseCards:
     'Choose a card of each color according to your emotions and let yourself be guided by tapping each corresponding card in order',
@@ -22,10 +22,11 @@ export default {
   placeYourself:
     '. Find a place where you feel good and have enough space. Pay attention to your breath and follow me.',
   letsGo: 'Next',
+  replay: 'Replay',
   iChooseThisCard: 'I choose this card',
   chooseAnotherCard: 'Choose another card',
   manaActivated:
-    'Congratulations, you have activated your Mana! Say to yourself: "The Power is in me!"',
+    'Congratulations, you have activated your Mana! Say to yourself: "The Power is within me!"',
   thankYou: 'Thank you',
 
   //Menus
