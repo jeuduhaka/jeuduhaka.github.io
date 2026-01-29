@@ -52,18 +52,20 @@ export default function ConfirmCardPage() {
       </div>
 
       {/* Card Display */}
-      <div className="flex-1 flex flex-col items-center justify-center p-4">
-        <div className="relative w-64 h-96 mb-4">
+      <div className="flex-1 min-h-0 flex flex-col items-center justify-center p-4 overflow-hidden">
+        <div className="relative w-full max-w-64 aspect-[2/3] max-h-[50vh]">
           <Image
             src={getCardImage(currentDeck, selectedCardName)}
             alt={t(selectedCardName)}
             fill
             className="object-contain"
           />
+          <div className="absolute bottom-[7.5%] left-0 right-0 flex justify-center">
+            <h2 className="text-white font-charcuterie text-4xl drop-shadow-lg px-2 bg-black/30 rounded">
+              {t(selectedCardName)}
+            </h2>
+          </div>
         </div>
-        <h2 className="text-white font-charcuterie text-2xl mb-6">
-          {t(selectedCardName)}
-        </h2>
       </div>
 
       {/* Buttons */}
