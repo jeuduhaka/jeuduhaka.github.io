@@ -1,5 +1,6 @@
 'use client'
 
+import { useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import Image from 'next/image'
 import { useTranslation } from 'react-i18next'
@@ -15,7 +16,13 @@ export default function HomePage() {
   const router = useRouter()
   const { t } = useTranslation()
   const setGameMode = useGameStore((state) => state.setGameMode)
+  const resetGame = useGameStore((state) => state.resetGame)
   const { openDrawer } = useDrawer()
+
+  // Reset game state when returning to home screen
+  useEffect(() => {
+    resetGame()
+  }, [resetGame])
 
   const handlePlay3Moves = () => {
     setGameMode('3moves')

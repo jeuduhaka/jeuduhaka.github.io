@@ -17,7 +17,7 @@ export function HomeButton({ tintColor = '#014DA2', className }: HomeButtonProps
 
   const handleClick = () => {
     resetGame()
-    router.push(routes.home)
+    router.replace(routes.home)
   }
 
   return (

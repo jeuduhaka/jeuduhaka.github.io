@@ -16,7 +16,7 @@ export default function FinalPage() {
 
   const handleThankYou = () => {
     resetGame()
-    router.push(routes.home)
+    router.replace(routes.home)
   }
 
   return (

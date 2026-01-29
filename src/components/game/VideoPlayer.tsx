@@ -133,6 +133,10 @@ export function VideoPlayer({ src, onEnded, onDuration, autoPlay = true, classNa
         // ignore
       }
       youtubePlayerRef.current = null
+      // Clear the container to prevent React DOM removal errors
+      if (youtubeContainerRef.current) {
+        youtubeContainerRef.current.innerHTML = ''
+      }
     }
   }, [src, autoPlay, handleYoutubeStateChange])
 
