@@ -105,7 +105,11 @@ export function MobileDrawer({ tintColor = '#014DA2', showMenuButton = true }: M
 
           <div className="mt-8 pt-4 border-t border-orange-300 text-center text-sm text-gray-600">
             <p>{t('developedBy')}</p>
-            <p className="font-semibold">Marc Kucharz</p>
+            <p className="font-semibold">
+              <a href="mailto:roques.florent@gmail.com?subject=Merci pour le Jeu du Haka Ludocoach" className="hover:underline">
+                Florent Roques
+              </a>
+            </p>
           </div>
         </div>
       </div>
