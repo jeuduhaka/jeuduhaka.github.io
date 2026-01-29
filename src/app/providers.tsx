@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import '@/lib/i18n'
 import { DrawerProvider } from '@/contexts/DrawerContext'
 import { MobileDrawer } from '@/components/navigation'
+import { HtmlLangSync } from '@/components/layout'
 
 export function Providers({ children }: { children: React.ReactNode }) {
   const [mounted, setMounted] = useState(false)
@@ -19,6 +20,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
 
   return (
     <DrawerProvider>
+      <HtmlLangSync />
       <MobileDrawer showMenuButton={false} />
       {children}
     </DrawerProvider>

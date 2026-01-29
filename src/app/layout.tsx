@@ -9,7 +9,7 @@ const siteUrl =
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
-  title: 'Le Jeu du Haka',
+  title: 'Le Jeu du Haka Ludocoach',
   description: 'Transforme ton énergie négative en énergie positive !',
   manifest: '/manifest.json',
   icons: {
@@ -22,24 +22,24 @@ export const metadata: Metadata = {
   appleWebApp: {
     capable: true,
     statusBarStyle: 'black-translucent',
-    title: 'Jeu du Haka',
+    title: 'Le Jeu du Haka Ludocoach',
   },
   openGraph: {
-    title: 'Le Jeu du Haka',
+    title: 'Le Jeu du Haka Ludocoach',
     description: 'Transforme ton énergie négative en énergie positive !',
     images: [
       {
         url: '/icons/jeuduhaka-app-icon-512x512.png',
         width: 512,
         height: 512,
-        alt: 'Le Jeu du Haka',
+        alt: 'Le Jeu du Haka Ludocoach',
       },
     ],
     type: 'website',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Le Jeu du Haka',
+    title: 'Le Jeu du Haka Ludocoach',
     description: 'Transforme ton énergie négative en énergie positive !',
     images: ['/icons/jeuduhaka-app-icon-512x512.png'],
   },
