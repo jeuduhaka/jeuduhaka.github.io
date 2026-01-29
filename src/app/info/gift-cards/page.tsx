@@ -20,11 +20,19 @@ const giftCardNames: GreenCardName[] = [
   'peace',
 ]
 
+const GIFT_LANGS = ['en', 'fr'] as const
+type GiftLang = (typeof GIFT_LANGS)[number]
+
+function giftLangFromI18n(lang: string | undefined): GiftLang {
+  const base = lang?.split('-')[0]?.toLowerCase() || 'en'
+  return GIFT_LANGS.includes(base as GiftLang) ? (base as GiftLang) : 'en'
+}
+
 export default function GiftCardsPage() {
   const { t, i18n } = useTranslation()
   const [selectedCard, setSelectedCard] = useState<GreenCardName | null>(null)
 
-  const language = i18n.language === 'fr' ? 'fr' : 'en'
+  const language = giftLangFromI18n(i18n.language || i18n.resolvedLanguage)
   const gifts = cardImageSources.gifts[language] as Record<string, string>
 
   const handleShare = async () => {
