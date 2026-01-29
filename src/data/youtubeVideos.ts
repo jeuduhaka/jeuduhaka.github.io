@@ -16,11 +16,11 @@ export const cardYoutubeSources = {
   orange: {
     action: 'Ol2n8UltPv8',
     courage: '83alTKngln8',
-    movement: '6Wn-_y7Z77A',
+    movement: 'URpVTv8TEsg',
     patience: 'cr6JtfND-J0',
     preparation: 'QsiAgsBHMj8',
     prevention: 'eu-reD01_ec',
-    protection: 'H7a6t_0c5p8',
+    protection: 'OIdATY0rG48',
     unity: '69l58TjG2to',
     'joker-orange': '1mWJutM-j7k',
   },
