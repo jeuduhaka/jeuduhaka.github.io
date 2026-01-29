@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useRef, useCallback } from 'react'
+import { use, useEffect, useState, useRef, useCallback } from 'react'
 import { useRouter } from 'next/navigation'
 import { useTranslation } from 'react-i18next'
 import { BackButton, HomeButton } from '@/components/navigation'
@@ -8,19 +8,61 @@ import { VideoPlayer } from '@/components/game'
 import { Button } from '@/components/ui'
 import { useGameStore } from '@/store/gameStore'
 import { getYoutubeVideoUrl } from '@/data/youtubeVideos'
-import { nextDeck } from '@/types'
+import { cardImageSources } from '@/data/images'
+import { CardDeckName, DECK_ORDER, nextDeck } from '@/types'
 import { routes } from '@/lib/routes'
 
-export default function VideoPage() {
+const VALID_DECKS: CardDeckName[] = DECK_ORDER
+
+interface Props {
+  params: Promise<{ deck: string; card: string }>
+}
+
+function isValidDeck(deck: string): deck is CardDeckName {
+  return VALID_DECKS.includes(deck as CardDeckName)
+}
+
+function isValidCardForDeck(deck: CardDeckName, card: string): boolean {
+  const deckCards = cardImageSources.front[deck]
+  return deckCards != null && Object.prototype.hasOwnProperty.call(deckCards, card)
+}
+
+export default function VideoPage({ params }: Props) {
+  const resolved = use(params)
+  const deckParam = resolved.deck
+  const cardParam = decodeURIComponent(resolved.card)
   const router = useRouter()
   const { t } = useTranslation()
-  const { gameMode, currentDeck, selectedCards, setCurrentDeck } = useGameStore()
+  const {
+    gameMode,
+    currentDeck,
+    selectedCards,
+    setCurrentDeck,
+    setSelectedCardForDeck,
+  } = useGameStore()
   const [showEndOverlay, setShowEndOverlay] = useState(false)
   const [replayKey, setReplayKey] = useState(0)
   const fallbackTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
-  const cardName = selectedCards[currentDeck]
-  const videoUrl = cardName ? getYoutubeVideoUrl(currentDeck, cardName) : ''
+  const deck = isValidDeck(deckParam) ? deckParam : 'red'
+  const isValid = isValidDeck(deckParam) && isValidCardForDeck(deck, cardParam)
+  const cardName = isValid ? cardParam : ''
+
+  // Sync store from URL so back/refresh restores correct state
+  useEffect(() => {
+    if (isValid) {
+      setSelectedCardForDeck(deck, cardParam)
+    }
+  }, [deckParam, cardParam, deck, isValid, setSelectedCardForDeck])
+
+  const videoUrl = cardName ? getYoutubeVideoUrl(deck, cardName) : ''
+
+  // Redirect invalid deck/card to choose-card for that deck
+  useEffect(() => {
+    if (!isValid) {
+      router.replace(routes.game.chooseCard(deck))
+    }
+  }, [isValid, deck, router])
 
   // Duration-based fallback: show overlay after video duration + 3s (when YouTube API doesn't fire on mobile).
   const handleDuration = useCallback((seconds: number) => {
@@ -51,8 +93,13 @@ export default function VideoPage() {
     setShowEndOverlay(false)
     if (currentDeck !== 'green') {
       const next = nextDeck(currentDeck)
-      setCurrentDeck(next)
-      router.refresh()
+      const nextCard = selectedCards[next]
+      if (nextCard) {
+        router.push(routes.game.video(next, nextCard))
+      } else {
+        setCurrentDeck(next)
+        router.replace(routes.game.chooseCard(next))
+      }
     } else {
       router.push(routes.game.final)
     }
@@ -67,7 +114,6 @@ export default function VideoPage() {
       router.push(routes.game.final)
       return
     }
-    // 3-moves: show overlay with Replay and Next
     setShowEndOverlay(true)
   }
 
@@ -80,8 +126,12 @@ export default function VideoPage() {
 
   const showOverlay = showEndOverlay && gameMode === '3moves'
 
+  if (!videoUrl) {
+    return null
+  }
+
   return (
-    <div className="flex flex-col h-screen bg-black relative">
+    <div className="flex flex-col h-screen max-h-[100vh] overflow-hidden bg-black relative">
       <div className="relative h-12 z-10 shrink-0">
         <BackButton tintColor="#ffffff" />
         <HomeButton tintColor="#ffffff" />
@@ -111,7 +161,6 @@ export default function VideoPage() {
         />
       </div>
 
-      {/* Overlay in-place (no portal) so it always renders when showOverlay is true. */}
       {showOverlay && (
         <div
           className="fixed inset-0 z-[9999] flex flex-col items-center justify-center gap-4 bg-black/80 p-6 pb-[max(1.5rem,env(safe-area-inset-bottom))]"

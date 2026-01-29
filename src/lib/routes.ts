@@ -1,14 +1,17 @@
+import type { CardDeckName } from '@/types'
+
 /**
  * Central route paths for the app. Use these for navigation so URLs stay consistent.
+ * choose-card and video include deck/card so state can be restored from URL.
  */
 export const routes = {
   home: '/',
   // Game flow
   game: {
     instructions: (mode: '1move' | '3moves') => `/game/instructions/${mode}`,
-    chooseCard: '/game/choose-card',
+    chooseCard: (deck: CardDeckName) => `/game/choose-card/${deck}`,
     afterCards: '/game/after-cards',
-    video: '/game/video',
+    video: (deck: CardDeckName, card: string) => `/game/video/${deck}/${encodeURIComponent(card)}`,
     final: '/game/final',
   },
   // Info pages

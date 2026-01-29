@@ -23,8 +23,8 @@ export default function InstructionsPage({ params }: Props) {
   const is3Moves = mode === '3moves'
 
   const handlePlay = () => {
-    // Both modes: go to choose card (store has currentDeck: red for 3moves, green for 1move)
-    router.push(routes.game.chooseCard)
+    // 3moves: start with red deck; 1move: green deck only
+    router.push(routes.game.chooseCard(is3Moves ? 'red' : 'green'))
   }
 
   return (

@@ -21,6 +21,8 @@ interface GameState {
   confirmCard: () => void
   goToNextDeck: () => void
   setCurrentDeck: (deck: CardDeckName) => void
+  /** Sync selected card for a deck from URL (e.g. when loading video page by URL). */
+  setSelectedCardForDeck: (deck: CardDeckName, card: CardName | '') => void
   resetGame: () => void
 
   // History for undo
@@ -80,6 +82,15 @@ export const useGameStore = create<GameState>()(
 
       // Set current deck directly
       setCurrentDeck: (deck) => set({ currentDeck: deck }),
+
+      // Sync selected card for a deck (for URL-based state restore)
+      setSelectedCardForDeck: (deck, card) => {
+        const { selectedCards } = get()
+        set({
+          currentDeck: deck,
+          selectedCards: { ...selectedCards, [deck]: card },
+        })
+      },
 
       // Reset game
       resetGame: () =>

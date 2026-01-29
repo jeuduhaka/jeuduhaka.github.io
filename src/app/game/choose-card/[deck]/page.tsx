@@ -1,5 +1,6 @@
 'use client'
 
+import { use, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { useTranslation } from 'react-i18next'
 import { BackButton, HomeButton } from '@/components/navigation'
@@ -7,16 +8,43 @@ import { Card } from '@/components/ui'
 import { ChooseCardText } from '@/components/game'
 import { useGameStore } from '@/store/gameStore'
 import { cardImageSources, getCardImage } from '@/data/images'
-import { CardName } from '@/types'
+import { CardName, CardDeckName, DECK_ORDER, nextDeck } from '@/types'
 import { routes } from '@/lib/routes'
 
-export default function ChooseCardPage() {
+const VALID_DECKS: CardDeckName[] = DECK_ORDER
+
+interface Props {
+  params: Promise<{ deck: string }>
+}
+
+function isValidDeck(deck: string): deck is CardDeckName {
+  return VALID_DECKS.includes(deck as CardDeckName)
+}
+
+export default function ChooseCardPage({ params }: Props) {
+  const { deck: deckParam } = use(params)
   const router = useRouter()
   const { t } = useTranslation()
-  const { gameMode, currentDeck, selectCard, confirmCard, goToNextDeck } = useGameStore()
+  const { gameMode, currentDeck, setCurrentDeck, selectCard, confirmCard, goToNextDeck } =
+    useGameStore()
 
-  // Get cards for current deck and sort (joker at end)
-  const deckCards = Object.keys(cardImageSources.front[currentDeck]).sort((a, b) => {
+  const deck = isValidDeck(deckParam) ? deckParam : 'red'
+
+  // Sync store from URL so back/refresh restores correct state
+  useEffect(() => {
+    if (deck !== currentDeck) {
+      setCurrentDeck(deck)
+    }
+  }, [deck, currentDeck, setCurrentDeck])
+
+  // Redirect invalid deck to red
+  useEffect(() => {
+    if (!isValidDeck(deckParam)) {
+      router.replace(routes.game.chooseCard('red'))
+    }
+  }, [deckParam, router])
+
+  const deckCards = Object.keys(cardImageSources.front[deck] || {}).sort((a, b) => {
     if (a.includes('joker')) return 1
     if (b.includes('joker')) return -1
     return a.localeCompare(b)
@@ -26,22 +54,26 @@ export default function ChooseCardPage() {
     selectCard(cardName as CardName)
 
     if (gameMode === '1move') {
-      router.push(routes.game.video)
+      router.push(routes.game.video('green', cardName))
     } else {
       confirmCard()
-      if (currentDeck === 'green') {
+      if (deck === 'green') {
         router.push(routes.game.afterCards)
       } else {
         goToNextDeck()
-        router.push(routes.game.chooseCard)
+        router.push(routes.game.chooseCard(nextDeck(deck)))
       }
     }
   }
 
   const backHref =
-    gameMode === '3moves' && currentDeck === 'red'
+    gameMode === '3moves' && deck === 'red'
       ? routes.game.instructions('3moves')
       : undefined
+
+  if (!isValidDeck(deckParam)) {
+    return null
+  }
 
   return (
     <div className="flex flex-col h-screen bg-black">
@@ -49,7 +81,7 @@ export default function ChooseCardPage() {
       <div className="relative h-14 flex items-center justify-center">
         <BackButton tintColor="#ffffff" href={backHref} />
         <HomeButton tintColor="#ffffff" />
-        <ChooseCardText currentDeck={currentDeck} />
+        <ChooseCardText currentDeck={deck} />
       </div>
 
       {/* Card Grid */}
@@ -58,7 +90,7 @@ export default function ChooseCardPage() {
           <Card
             key={cardName}
             name={t(cardName)}
-            imageSrc={getCardImage(currentDeck, cardName)}
+            imageSrc={getCardImage(deck, cardName)}
             onClick={() => handleCardPress(cardName)}
           />
         ))}

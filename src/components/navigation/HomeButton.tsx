@@ -1,6 +1,5 @@
 'use client'
 
-import { useRouter } from 'next/navigation'
 import { Home } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { useGameStore } from '@/store/gameStore'
@@ -12,12 +11,12 @@ interface HomeButtonProps {
 }
 
 export function HomeButton({ tintColor = '#014DA2', className }: HomeButtonProps) {
-  const router = useRouter()
   const resetGame = useGameStore((state) => state.resetGame)
 
   const handleClick = () => {
     resetGame()
-    router.replace(routes.home)
+    // Full navigation replaces current history entry; fresh app state at home
+    window.location.replace(routes.home)
   }
 
   return (

@@ -15,8 +15,11 @@ export default function AfterCardsPage() {
   const { selectedCards, setCurrentDeck } = useGameStore()
 
   const handleLetsGo = () => {
-    setCurrentDeck('red')
-    router.push(routes.game.video)
+    const firstDeckCard = selectedCards.red
+    if (firstDeckCard) {
+      setCurrentDeck('red')
+      router.push(routes.game.video('red', firstDeckCard))
+    }
   }
 
   return (
