@@ -31,7 +31,7 @@ export default function InstructionsPage({ params }: Props) {
     <BackgroundWave className="flex flex-col h-screen">
       {/* Header */}
       <div className="relative h-12">
-        <BackButton />
+        <BackButton href={routes.home} />
         <HomeButton />
       </div>
 
