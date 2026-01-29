@@ -1,6 +1,6 @@
 {
-  "name": "Le Jeu du Haka",
-  "short_name": "Jeu du Haka",
+  "name": "Le Jeu du Haka Ludocoach",
+  "short_name": "Haka Ludocoach",
   "description": "Transforme ton énergie négative en énergie positive !",
   "start_url": "/",
   "display": "standalone",
