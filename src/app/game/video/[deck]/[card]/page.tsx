@@ -31,7 +31,6 @@ export default function VideoPage({ params }: Props) {
   const cardParam = decodeURIComponent(resolved.card)
   const router = useRouter()
   const { setSelectedCardForDeck } = useGameStore()
-  const fallbackTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const hasNavigatedRef = useRef(false)
 
   const deck = isValidDeck(deckParam) ? deckParam : 'red'
@@ -57,37 +56,8 @@ export default function VideoPage({ params }: Props) {
   const goToEndScreen = useCallback(() => {
     if (hasNavigatedRef.current || !cardName) return
     hasNavigatedRef.current = true
-    if (fallbackTimerRef.current) {
-      clearTimeout(fallbackTimerRef.current)
-      fallbackTimerRef.current = null
-    }
     router.push(routes.game.videoEnd(deck, cardName))
   }, [deck, cardName, router])
-
-  // Duration-based fallback: go to end screen after video duration + 3s (when YouTube API doesn't fire on mobile).
-  const handleDuration = useCallback(
-    (seconds: number) => {
-      if (fallbackTimerRef.current) clearTimeout(fallbackTimerRef.current)
-      fallbackTimerRef.current = setTimeout(() => {
-        fallbackTimerRef.current = null
-        goToEndScreen()
-      }, (seconds + 3) * 1000)
-    },
-    [goToEndScreen]
-  )
-
-  // Safety: go to end screen after 30s so user can continue even if onEnded/onDuration never fire.
-  useEffect(() => {
-    if (!videoUrl) return
-    const safety = setTimeout(goToEndScreen, 30 * 1000)
-    return () => {
-      clearTimeout(safety)
-      if (fallbackTimerRef.current) {
-        clearTimeout(fallbackTimerRef.current)
-        fallbackTimerRef.current = null
-      }
-    }
-  }, [videoUrl, goToEndScreen])
 
   const handleVideoEnded = () => {
     goToEndScreen()
@@ -108,7 +78,6 @@ export default function VideoPage({ params }: Props) {
         <VideoPlayer
           src={videoUrl}
           onEnded={handleVideoEnded}
-          onDuration={handleDuration}
           className="h-full"
         />
       </div>
