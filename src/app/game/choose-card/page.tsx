@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation'
 import { useTranslation } from 'react-i18next'
 import { BackButton, HomeButton } from '@/components/navigation'
 import { Card } from '@/components/ui'
-import { ChooseCardText, DecksContainer } from '@/components/game'
+import { ChooseCardText } from '@/components/game'
 import { useGameStore } from '@/store/gameStore'
 import { cardImageSources, getCardImage } from '@/data/images'
 import { CardName } from '@/types'
@@ -32,12 +32,6 @@ export default function ChooseCardPage() {
     }
   }
 
-  // Split cards into rows of 3
-  const rows: string[][] = []
-  for (let i = 0; i < deckCards.length; i += 3) {
-    rows.push(deckCards.slice(i, i + 3))
-  }
-
   const backHref =
     gameMode === '3moves' && currentDeck === 'red' ? routes.game.deck : undefined
 
@@ -51,18 +45,14 @@ export default function ChooseCardPage() {
       </div>
 
       {/* Card Grid */}
-      <div className="flex-1 min-h-0 flex flex-col gap-1 p-1 overflow-hidden">
-        {rows.map((row, rowIndex) => (
-          <DecksContainer key={rowIndex} className="flex-1 min-h-0">
-            {row.map((cardName) => (
-              <Card
-                key={cardName}
-                name={t(cardName)}
-                imageSrc={getCardImage(currentDeck, cardName)}
-                onClick={() => handleCardPress(cardName)}
-              />
-            ))}
-          </DecksContainer>
+      <div className="flex-1 min-h-0 grid grid-cols-3 grid-rows-3 gap-1 p-1 overflow-hidden">
+        {deckCards.map((cardName) => (
+          <Card
+            key={cardName}
+            name={t(cardName)}
+            imageSrc={getCardImage(currentDeck, cardName)}
+            onClick={() => handleCardPress(cardName)}
+          />
         ))}
       </div>
     </div>
