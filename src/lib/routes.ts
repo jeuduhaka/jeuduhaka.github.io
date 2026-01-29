@@ -12,6 +12,8 @@ export const routes = {
     chooseCard: (deck: CardDeckName) => `/game/choose-card/${deck}`,
     afterCards: '/game/after-cards',
     video: (deck: CardDeckName, card: string) => `/game/video/${deck}/${encodeURIComponent(card)}`,
+    videoEnd: (deck: CardDeckName, card: string) =>
+      `/game/video/${deck}/${encodeURIComponent(card)}/end`,
     final: '/game/final',
   },
   // Info pages
