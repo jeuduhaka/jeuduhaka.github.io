@@ -1,86 +1,62 @@
-'use client'
+import VideoClient from './VideoClient'
 
-import { use, useEffect, useRef, useCallback } from 'react'
-import { useRouter } from 'next/navigation'
-import { BackButton, HomeButton } from '@/components/navigation'
-import { VideoPlayer } from '@/components/game'
-import { useGameStore } from '@/store/gameStore'
-import { getYoutubeVideoUrl } from '@/data/youtubeVideos'
-import { cardImageSources } from '@/data/images'
-import { CardDeckName, CardName, DECK_ORDER } from '@/types'
-import { routes } from '@/lib/routes'
+const RED_CARDS = [
+  'abandonment',
+  'anger',
+  'disgust',
+  'doubt',
+  'threat',
+  'fear',
+  'sadness',
+  'violence',
+  'joker-red',
+]
 
-const VALID_DECKS: CardDeckName[] = DECK_ORDER
+const ORANGE_CARDS = [
+  'action',
+  'courage',
+  'movement',
+  'patience',
+  'preparation',
+  'prevention',
+  'protection',
+  'unity',
+  'joker-orange',
+]
+
+const GREEN_CARDS = [
+  'love',
+  'calm',
+  'confidence',
+  'energy',
+  'self-esteem',
+  'strength',
+  'joy',
+  'peace',
+  'joker-green',
+]
+
+export function generateStaticParams() {
+  const params: { deck: string; card: string }[] = []
+
+  for (const card of RED_CARDS) {
+    params.push({ deck: 'red', card })
+  }
+  for (const card of ORANGE_CARDS) {
+    params.push({ deck: 'orange', card })
+  }
+  for (const card of GREEN_CARDS) {
+    params.push({ deck: 'green', card })
+  }
+
+  return params
+}
 
 interface Props {
   params: Promise<{ deck: string; card: string }>
 }
 
-function isValidDeck(deck: string): deck is CardDeckName {
-  return VALID_DECKS.includes(deck as CardDeckName)
-}
-
-function isValidCardForDeck(deck: CardDeckName, card: string): boolean {
-  const deckCards = cardImageSources.front[deck]
-  return deckCards != null && Object.prototype.hasOwnProperty.call(deckCards, card)
-}
-
-export default function VideoPage({ params }: Props) {
-  const resolved = use(params)
-  const deckParam = resolved.deck
-  const cardParam = decodeURIComponent(resolved.card)
-  const router = useRouter()
-  const { setSelectedCardForDeck } = useGameStore()
-  const hasNavigatedRef = useRef(false)
-
-  const deck = isValidDeck(deckParam) ? deckParam : 'red'
-  const isValid = isValidDeck(deckParam) && isValidCardForDeck(deck, cardParam)
-  const cardName = isValid ? cardParam : ''
-
-  // Sync store from URL so back/refresh restores correct state
-  useEffect(() => {
-    if (isValid) {
-      setSelectedCardForDeck(deck, cardParam as CardName)
-    }
-  }, [deckParam, cardParam, deck, isValid, setSelectedCardForDeck])
-
-  const videoUrl = cardName ? getYoutubeVideoUrl(deck, cardName) : ''
-
-  // Redirect invalid deck/card to choose-card for that deck
-  useEffect(() => {
-    if (!isValid) {
-      router.replace(routes.game.chooseCard(deck))
-    }
-  }, [isValid, deck, router])
-
-  const goToEndScreen = useCallback(() => {
-    if (hasNavigatedRef.current || !cardName) return
-    hasNavigatedRef.current = true
-    router.push(routes.game.videoEnd(deck, cardName))
-  }, [deck, cardName, router])
-
-  const handleVideoEnded = () => {
-    goToEndScreen()
-  }
-
-  if (!videoUrl) {
-    return null
-  }
-
-  return (
-    <div className="flex flex-col h-screen max-h-[100vh] overflow-hidden bg-black relative">
-      <div className="relative h-12 z-10 shrink-0">
-        <BackButton tintColor="#ffffff" />
-        <HomeButton tintColor="#ffffff" />
-      </div>
-
-      <div className="h-[80vh] relative min-h-0 shrink-0">
-        <VideoPlayer
-          src={videoUrl}
-          onEnded={handleVideoEnded}
-          className="h-full"
-        />
-      </div>
-    </div>
-  )
+export default async function VideoPage({ params }: Props) {
+  const { deck, card } = await params
+  return <VideoClient deck={deck} card={decodeURIComponent(card)} />
 }
