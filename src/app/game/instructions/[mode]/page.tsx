@@ -10,6 +10,10 @@ import { useGameStore } from '@/store/gameStore'
 import { getDeckColor } from '@/types'
 import { routes } from '@/lib/routes'
 
+export function generateStaticParams() {
+  return [{ mode: '3moves' }, { mode: '1move' }]
+}
+
 interface Props {
   params: Promise<{ mode: string }>
 }
