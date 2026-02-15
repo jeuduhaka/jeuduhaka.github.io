@@ -23,6 +23,5 @@ export const routes = {
     giftCards: '/info/gift-cards',
     authors: '/info/authors',
     gamesList: '/info/games-list',
-    acknowledgements: '/info/acknowledgements',
   },
 } as const

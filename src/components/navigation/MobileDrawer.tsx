@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import Image from 'next/image'
-import { X, Home, Target, Lightbulb, Gift, Mail, Users, List, Heart } from 'lucide-react'
+import { X, Home, Target, Lightbulb, Gift, Mail, Users, List } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { cn } from '@/lib/utils'
 import { MenuButton } from './MenuButton'
@@ -35,7 +35,6 @@ export function MobileDrawer({ tintColor = '#014DA2', showMenuButton = true }: M
     },
     { href: routes.info.authors, icon: Users, label: t('authorsTitle') },
     { href: routes.info.gamesList, icon: List, label: t('gamesListTitle') },
-    { href: routes.info.acknowledgements, icon: Heart, label: t('acknowledgementsMenu') },
   ]
 
   return (
